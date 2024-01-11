@@ -1,5 +1,5 @@
 from wpimath.geometry import Transform3d, Translation3d, Pose3d, Rotation3d
-from wpimath.units import degreesToRadians
+from wpimath.units import degreesToRadians, inchesToMeters
 
 # Joystick IDs
 
@@ -16,6 +16,8 @@ RIGHT_MOTOR_2_PORT = 4
 # Button Mapping
 
 # Drivetrain Config
+TRACK_WIDTH = inchesToMeters(24.0)
+WHEEL_DIAMETER = inchesToMeters(6.0)
 
 # Vision Sensors
 CAMERA_NAME = "photonvision"

@@ -9,7 +9,7 @@ from utils import FieldTagLayout
 import constants
 
 
-class AprilTagCamera(object):
+class VisionSubsystem(object):
     camera: PhotonCamera
     robot_to_cam: Transform3d
 

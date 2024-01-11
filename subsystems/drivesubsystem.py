@@ -1,10 +1,13 @@
+import math
 import wpilib
 import wpilib.drive
+
 import commands2
 
 from rev import CANSparkMax, SparkMaxAbsoluteEncoder
 
 import constants
+from subsystems import GNCSubsystem
 from utils import LazyCANSparkMax
 
 
@@ -15,6 +18,7 @@ class DriveSubsystem(commands2.Subsystem):
     right_motor_2 = LazyCANSparkMax(constants.RIGHT_MOTOR_2_PORT)
     left_encoder: SparkMaxAbsoluteEncoder
     right_encoder: SparkMaxAbsoluteEncoder
+    gnc: GNCSubsystem
 
     def __init__(self) -> None:
         super().__init__()
@@ -24,9 +28,17 @@ class DriveSubsystem(commands2.Subsystem):
 
         self.left_motor_1.setInverted(False)
         self.right_motor_1.setInverted(True)
+
         self.drive = wpilib.drive.DifferentialDrive(self.left_motor_1, self.right_motor_1)
 
         self.left_encoder = self.left_motor_1.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle)
         self.right_encoder = self.right_motor_1.getAbsoluteEncoder(SparkMaxAbsoluteEncoder.Type.kDutyCycle)
         self.right_encoder.setInverted(False)
         self.right_encoder.setInverted(True)
+        self.left_encoder.setPositionConversionFactor(math.pi * constants.WHEEL_DIAMETER)
+        self.right_encoder.setPositionConversionFactor(math.pi * constants.WHEEL_DIAMETER)
+
+        self.GNC = GNCSubsystem(self.drive)
+
+    def periodic(self) -> None:
+        pass
