@@ -12,16 +12,18 @@ import constants
 class VisionSubsystem(object):
     camera: PhotonCamera
     robot_to_cam: Transform3d
+    best_candidate = None
+    observation_time: float
 
     def __init__(self, robot_to_cam: Transform3d):
-        self.pose_estimates = List[Pose2d]
+        self.pose_estimates = []
         setVersionCheckEnabled(False)
 
         self.camera = PhotonCamera(constants.CAMERA_NAME)
 
     def update(self, prev_est_pose: Pose2d):
         result = self.camera.getLatestResult()
-        observation_time = result.getTimestamp()
+        self.observation_time = result.getTimestamp()
 
         self.pose_estimates = []
 
@@ -44,8 +46,8 @@ class VisionSubsystem(object):
                 for candidate in filtered_candidates:
                     delta = (candidate - prev_est_pose).translation().norm()
                     if delta < best_candidate_dist:
-                        best_candidate = candidate
                         best_candidate_dist = delta
+                        self.best_candidate = candidate
 
     def _to_field_pose(self, target_pose: Pose3d, cam_to_target: Transform3d) -> Pose2d:
         cam_pose = target_pose.transformBy(cam_to_target.inverse())
