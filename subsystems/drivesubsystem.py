@@ -23,8 +23,8 @@ class DriveSubsystem(commands2.Subsystem):
     def __init__(self) -> None:
         super().__init__()
 
-        self.left_motor_2.follow(self.left_motor_1)
-        self.right_motor_2.follow(self.right_motor_1)
+        self.left_motor_2.follow(self.left_motor_1, False)
+        self.right_motor_2.follow(self.right_motor_1, False)
 
         self.left_motor_1.setInverted(False)
         self.right_motor_1.setInverted(True)
@@ -38,7 +38,8 @@ class DriveSubsystem(commands2.Subsystem):
         self.left_encoder.setPositionConversionFactor(math.pi * constants.WHEEL_DIAMETER)
         self.right_encoder.setPositionConversionFactor(math.pi * constants.WHEEL_DIAMETER)
 
-        self.GNC = GNCSubsystem(self.drive)
+    def arcadeDrive(self, fwd: float, rot: float):
+        self.drive.arcadeDrive(fwd, rot)
 
     def periodic(self) -> None:
         pass

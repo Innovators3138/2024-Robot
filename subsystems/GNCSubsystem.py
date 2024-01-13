@@ -10,8 +10,7 @@ from wpimath.units import degreesToRadians
 from navx import AHRS
 
 import constants
-from subsystems import VisionSubsystem
-from subsystems import DriveSubsystem
+from .visionsubsystem import VisionSubsystem
 
 class GNCSubsystem(object):
 
@@ -20,7 +19,7 @@ class GNCSubsystem(object):
     pose_estimator: DifferentialDrivePoseEstimator
     kinematics: DifferentialDriveKinematics
 
-    def __init__(self, drive: DriveSubsystem, initial_pose: Pose2d):
+    def __init__(self, drive, initial_pose: Pose2d):
         super().__init__()
 
         self.left_encoder = drive.left_encoder
