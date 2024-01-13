@@ -12,9 +12,10 @@ class RobotContainer(object):
         # Do all subsystem inits here
         self.drive_subsystem = DriveSubsystem()
 
-        self.configure_buttons()
+        self.driver_controller = commands2.button.CommandJoystick(constants.DRIVER_JOYSTICK)
+        self.operator_controller = commands2.button.CommandGenericHID(constants.OPERATOR_CONTROLLER)
 
-        self.driver_controller = commands2.button.CommandJoystick(0)
+        self.configure_buttons()
 
         self.drive_subsystem.setDefaultCommand(
             commands2.cmd.run(

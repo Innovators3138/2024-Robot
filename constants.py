@@ -2,7 +2,8 @@ from wpimath.geometry import Transform3d, Translation3d, Pose3d, Rotation3d
 from wpimath.units import degreesToRadians, inchesToMeters
 
 # Joystick IDs
-
+DRIVER_JOYSTICK = 0
+OPERATOR_CONTROLLER = 2
 # Motor Configs
 LEFT_MOTOR_1_PORT = 1
 LEFT_MOTOR_2_PORT = 2
