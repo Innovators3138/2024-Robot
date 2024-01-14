@@ -12,6 +12,17 @@ from navx import AHRS
 import constants
 from .visionsubsystem import VisionSubsystem
 
+
+def initialize_navx(port: SPI.Port) -> Gyro:
+
+    ahrs = AHRS(port)
+    while not ahrs.isConnected():
+        time.sleep(0.020)
+    while ahrs.isCalibrating():
+        time.sleep(0.020)
+    return ahrs
+
+
 class GNCSubsystem(object):
 
     pose2d: Pose2d
@@ -24,7 +35,7 @@ class GNCSubsystem(object):
 
         self.left_encoder = drive.left_encoder
         self.right_encoder = drive.right_encoder
-        self.gyro = self.initialize_navx(SPI.Port.kMXP)
+        self.gyro = initialize_navx(SPI.Port.kMXP)
         self.odometry = DifferentialDriveOdometry(self.gyro.getRotation2d(),
                                                   self.left_encoder.getPosition(),
                                                   self.right_encoder.getPosition(),
@@ -55,14 +66,5 @@ class GNCSubsystem(object):
 
 
 
-
-    def initialize_navx(self, port: SPI.Port) -> Gyro:
-
-        ahrs = AHRS(port)
-        while not ahrs.isConnected():
-            time.sleep(0.020)
-        while not ahrs.isCalibrating():
-            time.sleep(0.020)
-        return ahrs
 
 
