@@ -18,6 +18,7 @@ class RobotContainer(object):
         self.GNC_subsystem = GNCSubsystem(self.drive_subsystem, Pose2d())
 
         self.driver_controller = commands2.button.CommandJoystick(constants.DRIVER_JOYSTICK)
+        self.driver_steering_wheel = commands2.button.CommandJoystick(1)
         self.operator_controller = commands2.button.CommandGenericHID(constants.OPERATOR_CONTROLLER)
 
         self.configure_buttons()
@@ -25,7 +26,7 @@ class RobotContainer(object):
         self.drive_subsystem.setDefaultCommand(
             commands2.cmd.run(
                 lambda: self.drive_subsystem.arcadeDrive(
-                    -self.driver_controller.getY(),
+                    -self.driver_steering_wheel.getY(),
                     -self.driver_controller.getX()
                 ),
                 (self.drive_subsystem)

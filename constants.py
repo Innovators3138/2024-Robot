@@ -17,8 +17,9 @@ RIGHT_MOTOR_2_PORT = 4
 # Button Mapping
 
 # Drivetrain Config
-TRACK_WIDTH = inchesToMeters(24.0)
-WHEEL_DIAMETER = inchesToMeters(6.0)
+TRACK_WIDTH = inchesToMeters(23.0)
+WHEEL_DIAMETER = inchesToMeters(4.0)
+DRIVE_GEAR_RATIO = 12.0 / 62.0 * 22.0 / 30.0
 
 # Vision Sensors
 CAMERA_NAME = "photonvision"

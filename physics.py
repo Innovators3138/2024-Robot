@@ -3,7 +3,6 @@ import typing
 import wpilib
 import wpilib.simulation
 
-
 import constants
 
 from pyfrc.physics.core import PhysicsInterface
@@ -12,6 +11,17 @@ from pyfrc.physics.units import units
 
 if typing.TYPE_CHECKING:
     from robot import MyRobot
+
+
+
+MOTOR_CFG_NEO = motor_cfgs.MotorModelConfig(
+    "NEO",
+    12 * units.volts,
+    5820 * units.cpm,
+    1.7 * units.amp,
+    3.28 * units.N_m,
+    181 * units.amp,
+)
 
 class PhysicsEngine:
 
@@ -27,13 +37,13 @@ class PhysicsEngine:
         bumper_width = 3.25 * units.inch
 
         self.drivetrain = tankmodel.TankModel.theory(
-            motor_cfgs.MOTOR_CFG_CIM,
+            MOTOR_CFG_NEO,
             110 * units.lbs,
-            10.71,
+            1.0 / constants.DRIVE_GEAR_RATIO,
             2,
-            24 * units.inch + bumper_width * 2,
-            28 * units.inch + bumper_width * 2,
-            6 * units.inch
+            24.0 * units.inch + bumper_width * 2,
+            28.0 * units.inch + bumper_width * 2,
+            4.0 * units.inch
         )
 
     def update_sim(self, now: float, tm_diff: float) -> None:
@@ -42,4 +52,4 @@ class PhysicsEngine:
 
         transform = self.drivetrain.calculate(lf_motor, rf_motor, tm_diff)
         pose = self.physics_controller.move_robot(transform)
-        self.navx_yaw.set(-pose.rotation().degrees())
+        self.navx_yaw.set(-pose.rotation().radians())
