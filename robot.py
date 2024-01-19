@@ -5,7 +5,7 @@ import robotcontainer
 
 class MyRobot(commands2.TimedCommandRobot):
     """
-    
+
     """
 
     def robotInit(self) -> None:
@@ -34,7 +34,7 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def teleopPeriodic(self) -> None:
         """"""
-        wpilib.DataLogManager.start()
+        wpilib.DataLogManager.start("/u/logs")
 
         wpilib.DriverStation.startDataLog(wpilib.DataLogManager.getLog())
 
