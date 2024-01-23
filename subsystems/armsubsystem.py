@@ -32,6 +32,7 @@ class ArmSubsystem(commands2.Subsystem):
 
         self.arm_motor_1.configMotionCruiseVelocity(constants.ARM_MAX_VEL, 30)
         self.arm_motor_1.configMotionAcceleration(constants.ARM_MAX_ACCEL)
+
     def set_position(self, position):
         self.arm_motor_1.set(ControlMode.MotionMagic, position)
 

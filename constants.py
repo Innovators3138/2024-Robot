@@ -9,6 +9,12 @@ LEFT_MOTOR_1_PORT = 1
 LEFT_MOTOR_2_PORT = 2
 RIGHT_MOTOR_1_PORT = 3
 RIGHT_MOTOR_2_PORT = 4
+ARM_MOTOR_1_PORT = 5
+ARM_MOTOR_2_PORT = 6
+INTAKE_MOTOR_1_PORT = 7
+INTAKE_MOTOR_2_PORT = 8
+SHOOTER_MOTOR_1_PORT = 9
+SHOOTER_MOTOR_2_PORT = 10
 
 # Pressure Sensor Constants
 
@@ -38,6 +44,22 @@ ARM_MAX_ACCEL = 1500  # Example maximum acceleration
 ARM_MIN_VEL = 0  # Minimum velocity
 ARM_ALLOWED_ERROR = 2  # Allowed closed loop error
 
+ARM_GROUND_PICKUP_POSITION = 1470  # +131.4 deg Relative to vertical
+ARM_SHOOTER_POSITION = 439  # +39.3 deg Relative to vertical
+ARM_FRONT_AMP_POSITION = 192  # +17.2 deg Relative to vertical
+ARM_REAR_AMP_POSITION = -699  # -62.5 Relative to vertical
+
+# Shooter Config
+SHOOTER_KP = 0.25
+SHOOTER_KI = 0.001
+SHOOTER_KD = 20.0
+SHOOTER_KF = 1023.0/7200.0
+SHOOTER_IZ = 300
+SHOOTER_PID_LOOP_IDX = 0
+SHOOTER_SLOT_IDX = 0
+SHOOTER_TIMEOUT_MS = 30
+SHOOTER_PEAK_OUT = 1.0
+SHOOTER_ENCODER_CPR = 4096
 
 
 # Vision Sensors

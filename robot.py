@@ -34,7 +34,10 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def teleopPeriodic(self) -> None:
         """"""
-        wpilib.DataLogManager.start("/u/logs")
+        if wpilib.RobotBase.isSimulation():
+            wpilib.DataLogManager.start()
+        else:
+            wpilib.DataLogManager.start("/u/logs")
 
         wpilib.DriverStation.startDataLog(wpilib.DataLogManager.getLog())
 
