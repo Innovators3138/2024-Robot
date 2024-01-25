@@ -1,3 +1,5 @@
+import math
+
 from wpimath.geometry import Transform3d, Translation3d, Pose3d, Rotation3d
 from wpimath.units import degreesToRadians, inchesToMeters
 
@@ -23,9 +25,13 @@ SHOOTER_MOTOR_2_PORT = 10
 # Button Mapping
 
 # Drivetrain Config
+import math
+
+# Drivebase Config
 TRACK_WIDTH = inchesToMeters(23.0)
 WHEEL_DIAMETER = inchesToMeters(4.0)
 DRIVE_GEAR_RATIO = 12.0 / 62.0 * 22.0 / 30.0
+DRIVE_ENCODER_CPR = 4096
 
 # Arm Config
 ARM_MOTOR_1_PORT = 5
@@ -68,3 +74,33 @@ ROBOT_TO_CAM = Transform3d(Pose3d(), Pose3d(Translation3d(0, 0, 1), Rotation3d(0
 
 # Electrical Subsystem
 NOMINAL_VOLTAGE = 11.0
+
+
+class PickUpShooter:
+    # NOTE: Please do NOT use these values on your robot.
+    kMotorPort = 4
+    kP = 1
+    kSVolts = 1
+    kGVolts = 1
+    kVVoltSecondPerRad = 0.5
+    kAVoltSecondSquaredPerRad = 0.1
+
+    kMaxVelocityRadPerSecond = 3
+    kMaxAccelerationRadPerSecSquared = 10
+
+    kEncoderPorts = (4, 5)
+    kEncoderPPR = 256
+    kEncoderDistancePerPulse = 2.0 * math.pi / kEncoderPPR
+
+    # The offset of the arm from the horizontal in its neutral position,
+    # measured from the horizontal
+    kArmOffsetRads = 0.5
+
+
+class AutoConstants:
+    kAutoTimeoutSeconds = 12
+    kAutoShootTimeSeconds = 7
+
+
+class OIConstants:
+    kDriverControllerPort = 0

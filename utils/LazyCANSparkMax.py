@@ -96,7 +96,10 @@ if wpilib.RobotBase.isSimulation():
         def getEncoder(self):
             return self._encoder
 
-        def getAbsoluteEncoder(self, type):
+        def getAbsoluteEncoder(self, encoderType):
+            return self._encoder
+
+        def getAlternateEncoder(self, countsPerRev):
             return self._encoder
 
         def getPIDcontroller(self):
