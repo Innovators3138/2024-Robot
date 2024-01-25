@@ -19,9 +19,7 @@ class RobotContainer(object):
         # Do all subsystem inits here
         self.drive_subsystem = DriveSubsystem()
 
-        self.field = wpilib.Field2d()
-        wpilib.SmartDashboard.putData("Field", self.field)
-        self.field.setRobotPose(self.drive_subsystem.pose_estimator.getEstimatedPosition())
+
         wpilib.SmartDashboard.putNumberArray("Targets", [x.fiducialId for x in
                                                          self.drive_subsystem.vision_subsystem.camera.getLatestResult().targets])
 
