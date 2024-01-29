@@ -1,6 +1,5 @@
 from phoenix5 import WPI_TalonSRX, ControlMode, FeedbackDevice
 import commands2
-
 import constants
 class ArmSubsystem(commands2.Subsystem):
     """

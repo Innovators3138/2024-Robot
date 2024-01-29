@@ -7,6 +7,7 @@ from wpilib import (
     Field2d,
     SmartDashboard
 )
+from wpimath.controller import PIDController
 from wpilib.drive import DifferentialDrive
 from wpilib.interfaces import Gyro
 import wpimath
@@ -17,7 +18,8 @@ from wpimath.geometry import (
 )
 from wpimath.kinematics import (
     DifferentialDriveKinematics,
-    DifferentialDriveOdometry,
+    DifferentialDriveWheelSpeeds,
+    ChassisSpeeds,
 )
 import wpimath.units
 
@@ -52,6 +54,8 @@ class DriveSubsystem(commands2.Subsystem):
     vision_subsystem: VisionSubsystem
     pose_estimator: DifferentialDrivePoseEstimator
     kinematics: DifferentialDriveKinematics
+    wheel_speeds: DifferentialDriveWheelSpeeds
+    chassis_speeds: ChassisSpeeds
 
 
     def __init__(self) -> None:
@@ -59,14 +63,9 @@ class DriveSubsystem(commands2.Subsystem):
         (self.left_motor_1, self.left_motor_2, self.right_motor_1, self.right_motor_2) = self.initialize_drive_motors()
         self.drive = DifferentialDrive(self.left_motor_1, self.right_motor_1)
         (self.left_encoder, self.right_encoder) = self.initialize_drive_encoders()
-
+        self.gyro = initialize_navx(SPI.Port.kMXP)
         self.current_pose2d = Pose2d()
 
-        self.gyro = initialize_navx(SPI.Port.kMXP)
-        self.odometry = DifferentialDriveOdometry(self.gyro.getRotation2d(),
-                                                                     self.left_encoder.getPosition(),
-                                                                     self.right_encoder.getPosition(),
-                                                                     self.current_pose2d)
         self.vision_subsystem = VisionSubsystem(constants.ROBOT_TO_CAM)
         self.kinematics = DifferentialDriveKinematics(constants.TRACK_WIDTH)
         self.pose_estimator = DifferentialDrivePoseEstimator(
@@ -78,9 +77,12 @@ class DriveSubsystem(commands2.Subsystem):
             (0.05, 0.05, wpimath.units.degreesToRadians(5.0)),
             (0.5, 0.5, wpimath.units.degreesToRadians(30.0))
         )
+        self.reset_pose()
+
         self.field = Field2d()
         SmartDashboard.putData("Field", self.field)
         self.field.setRobotPose(self.pose_estimator.getEstimatedPosition())
+        self.chassis_speeds = ChassisSpeeds(0,0,0)
 
     def arcade_drive(self, fwd: float, rot: float):
         self.drive.arcadeDrive(fwd, rot)
@@ -93,6 +95,10 @@ class DriveSubsystem(commands2.Subsystem):
         vision_pose = self.vision_subsystem.best_candidate
         if vision_pose != old_vision_pose:
             self.pose_estimator.addVisionMeasurement(vision_pose, self.vision_subsystem.observation_time)
+        self.wheel_speeds = DifferentialDriveWheelSpeeds(self.left_encoder.getVelocity()*self.left_encoder.getPositionConversionFactor(),
+                                                         self.right_encoder.getVelocity()*self.right_encoder.getPositionConversionFactor())
+        self.chassis_speeds = self.kinematics.toChassisSpeeds(self.wheel_speeds)
+
 
     def periodic(self) -> None:
         pass
@@ -121,3 +127,6 @@ class DriveSubsystem(commands2.Subsystem):
 
     def get_pose(self) -> Pose2d:
         return self.pose_estimator.getEstimatedPosition()
+
+    def reset_pose(self) -> None:
+        self.pose_estimator.resetPosition(self.gyro.getRotation2d(), self.left_encoder.getPosition(), self.right_encoder.getPosition(), Pose2d())
