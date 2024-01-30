@@ -58,6 +58,7 @@ class DriveSubsystem(commands2.Subsystem):
     chassis_speeds: ChassisSpeeds
 
 
+
     def __init__(self) -> None:
         super().__init__()
         (self.left_motor_1, self.left_motor_2, self.right_motor_1, self.right_motor_2) = self.initialize_drive_motors()
@@ -128,5 +129,32 @@ class DriveSubsystem(commands2.Subsystem):
     def get_pose(self) -> Pose2d:
         return self.pose_estimator.getEstimatedPosition()
 
-    def reset_pose(self) -> None:
-        self.pose_estimator.resetPosition(self.gyro.getRotation2d(), self.left_encoder.getPosition(), self.right_encoder.getPosition(), Pose2d())
+    def reset_pose(self, pose=Pose2d()) -> None:
+        self.pose_estimator.resetPosition(self.gyro.getRotation2d(), self.left_encoder.getPosition(), self.right_encoder.getPosition(), pose)
+
+    def get_robot_relative_speeds(self):
+        return self.chassis_speeds
+
+    def drive_robot_relative(self, speeds: ChassisSpeeds):
+        self.wheel_speeds = self.kinematics.toWheelSpeeds(speeds)
+        left_speed_fps = self.wheel_speeds.left_fps
+        right_speed_fps = self.wheel_speeds.right_fps
+        left_speed_rpm = left_speed_fps * 12 / (constants.WHEEL_DIAMETER * math.pi)
+        right_speed_rpm = right_speed_fps * 12 / (constants.WHEEL_DIAMETER * math.pi)
+
+        left_controller = self.left_motor_1.getPIDcontroller()
+        right_controller = self.right_motor_1.getPIDcontroller()
+        left_controller.setP(constants.DRIVE_KP)
+        right_controller.setP(constants.DRIVE_KP)
+        left_controller.setI(constants.DRIVE_KI)
+        right_controller.setI(constants.DRIVE_KI)
+        left_controller.setD(constants.DRIVE_KD)
+        right_controller.setD(constants.DRIVE_KD)
+        left_controller.setIZone(0.0)
+        right_controller.setIZone(0.0)
+        left_controller.setFF(constants.DRIVE_FF)
+        right_controller.setFF(constants.DRIVE_FF)
+        left_controller.setOutputRange(constants.DRIVE_MIN, constants.DRIVE_MAX)
+        right_controller.setOutputRange(constants.DRIVE_MIN, constants.DRIVE_MAX)
+        left_controller.setReference(left_speed_rpm, self.left_motor_1.ControlType.kVelocity)
+        right_controller.setReference(right_speed_rpm, self.right_motor_1.ControlType.kVelocity)
