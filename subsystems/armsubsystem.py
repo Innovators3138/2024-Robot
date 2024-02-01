@@ -1,12 +1,15 @@
 from phoenix5 import WPI_TalonSRX, ControlMode, FeedbackDevice
 import commands2
 import constants
+
+
 class ArmSubsystem(commands2.Subsystem):
     """
 
     """
     arm_motor_1: WPI_TalonSRX
     arm_motor_2: WPI_TalonSRX
+
     def __init__(self):
         super().__init__()
         self.arm_motor_1 = WPI_TalonSRX(constants.ARM_MOTOR_1_PORT)
@@ -35,10 +38,5 @@ class ArmSubsystem(commands2.Subsystem):
     def set_position(self, position):
         self.arm_motor_1.set(ControlMode.MotionMagic, position)
 
-
     def stop(self):
         self.arm_motor_1.stopMotor()
-
-
-
-

@@ -14,11 +14,9 @@ class RobotContainer(object):
     """
     drive_subsystem: DriveSubsystem
 
-
     def __init__(self):
         # Do all subsystem inits here
         self.drive_subsystem = DriveSubsystem()
-
 
         wpilib.SmartDashboard.putNumberArray("Targets", [x.fiducialId for x in
                                                          self.drive_subsystem.vision_subsystem.camera.getLatestResult().targets])
