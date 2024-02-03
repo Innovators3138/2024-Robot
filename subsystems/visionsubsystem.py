@@ -2,7 +2,7 @@ from typing import List
 
 import wpilib
 from wpimath.geometry import Pose3d, Transform3d, Pose2d
-from wpimath.units import feetToMeters
+from wpimath.units import feetToMeters, seconds
 from photonlibpy.photonCamera import PhotonCamera, setVersionCheckEnabled
 
 from utils import FieldTagLayout
@@ -12,8 +12,8 @@ import constants
 class VisionSubsystem(object):
     camera: PhotonCamera
     robot_to_cam: Transform3d
-    best_candidate = None
-    observation_time: float
+    best_candidate = Pose2d(0,0,0)
+    observation_time = seconds(0.0)
 
     def __init__(self, robot_to_cam: Transform3d):
         self.pose_estimates = []
@@ -23,7 +23,7 @@ class VisionSubsystem(object):
 
     def update(self, prev_est_pose: Pose2d):
         result = self.camera.getLatestResult()
-        self.observation_time = result.getTimestamp()
+        self.observation_time = seconds(result.getTimestamp())
 
         self.pose_estimates = []
 
