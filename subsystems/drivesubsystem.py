@@ -2,6 +2,7 @@ import math
 import time
 import typing
 
+import wpilib
 from wpilib import (
     SPI,
     Field2d,
@@ -27,6 +28,9 @@ import commands2
 
 from rev import SparkMaxAlternateEncoder
 from navx import AHRS
+
+from pathplannerlib.auto import AutoBuilder
+from pathplannerlib.config import ReplanningConfig, PIDConstants
 
 import constants
 from utils import LazyCANSparkMax
@@ -84,6 +88,19 @@ class DriveSubsystem(commands2.Subsystem):
         SmartDashboard.putData("Field", self.field)
         self.field.setRobotPose(self.pose_estimator.getEstimatedPosition())
         self.chassis_speeds = ChassisSpeeds(0,0,0)
+
+        AutoBuilder.configureLTV(
+            self.get_pose,
+            self.reset_pose,
+            self.get_robot_relative_speeds,
+            self.drive_robot_relative,
+            (0.0625, 0.125, 2.0),
+            (1.0, 2.0),
+            0.02,
+            ReplanningConfig(),
+            self.should_flip_path,
+            self
+        )
 
     def arcade_drive(self, fwd: float, rot: float):
         self.drive.arcadeDrive(fwd, rot)
@@ -158,3 +175,6 @@ class DriveSubsystem(commands2.Subsystem):
         right_controller.setOutputRange(constants.DRIVE_MIN, constants.DRIVE_MAX)
         left_controller.setReference(left_speed_rpm, self.left_motor_1.ControlType.kVelocity)
         right_controller.setReference(right_speed_rpm, self.right_motor_1.ControlType.kVelocity)
+
+    def should_flip_path(self) -> bool:
+        return wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed

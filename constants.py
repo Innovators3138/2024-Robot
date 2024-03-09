@@ -92,3 +92,6 @@ ROBOT_TO_CAM = Transform3d(Pose3d(), Pose3d(Translation3d(0, 0, 1), Rotation3d(0
 
 # Electrical Subsystem
 NOMINAL_VOLTAGE = 11.0
+
+# Autonomous Routines
+SIMPLE_AUTO_DISTANCE = 2.0 # meters
