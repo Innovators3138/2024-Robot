@@ -1,3 +1,4 @@
+import phoenix5
 from phoenix5 import WPI_TalonSRX, ControlMode, FeedbackDevice
 import commands2
 import constants
@@ -19,6 +20,7 @@ class ArmSubsystem(commands2.Subsystem):
         self.arm_motor_1.configFactoryDefault()
         self.arm_motor_2.configFactoryDefault()
         self.arm_motor_2.follow(self.arm_motor_1)
+        self.arm_motor_2.setInverted(phoenix5.InvertType.OpposeMaster)
         self.arm_motor_1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute)
 
         self.arm_motor_1.configNominalOutputForward(0, 30)

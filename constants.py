@@ -6,7 +6,8 @@ from wpimath.units import degreesToRadians, inchesToMeters
 # Joystick IDs
 DRIVER_JOYSTICK = 0
 OPERATOR_CONTROLLER = 2
-# Motor Configs
+
+# CAN Configs
 LEFT_MOTOR_1_PORT = 1
 LEFT_MOTOR_2_PORT = 2
 RIGHT_MOTOR_1_PORT = 3
@@ -15,6 +16,7 @@ ARM_MOTOR_1_PORT = 5
 ARM_MOTOR_2_PORT = 6
 INTAKE_MOTOR_PORT = 7
 SHOOTER_MOTOR_PORT = 8
+CANDLE_PORT = 9
 
 # Pressure Sensor Constants
 
