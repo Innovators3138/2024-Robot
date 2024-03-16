@@ -56,6 +56,7 @@ class LightsSubsystem(commands2.Subsystem):
         config_all.brightnessScalar = 0.1
         config_all.vBatOutputMode = phoenix5.led.VBatOutputMode.Modulated
         self.candle.configAllSettings(config_all, 100)
+        self.set_colors(Colors.Blue)
 
     def set_colors(self, color: Colors) -> None:
         self.change_animation(AnimationTypes.SetAll)
