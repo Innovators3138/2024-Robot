@@ -86,6 +86,9 @@ class DriveSubsystem(commands2.Subsystem):
 
         self.field = Field2d()
         SmartDashboard.putData("Field", self.field)
+        SmartDashboard.putNumber("Left Encoder", self.left_encoder.getPosition())
+        SmartDashboard.putNumber("Right Encoder", self.right_encoder.getPosition())
+
         self.field.setRobotPose(self.pose_estimator.getEstimatedPosition())
         self.chassis_speeds = ChassisSpeeds(0,0,0)
 
@@ -118,6 +121,7 @@ class DriveSubsystem(commands2.Subsystem):
         self.chassis_speeds = self.kinematics.toChassisSpeeds(self.wheel_speeds)
 
 
+
     def periodic(self) -> None:
         pass
 
@@ -139,8 +143,8 @@ class DriveSubsystem(commands2.Subsystem):
         right_motor_2 = LazyCANSparkMax(constants.RIGHT_MOTOR_2_PORT)
         left_motor_2.follow(left_motor_1, False)
         right_motor_2.follow(right_motor_1, False)
-        left_motor_1.setInverted(False)
-        right_motor_1.setInverted(True)
+        left_motor_1.setInverted(True)
+        right_motor_1.setInverted(False)
         return left_motor_1, left_motor_2, right_motor_1, right_motor_2
 
     def get_pose(self) -> Pose2d:

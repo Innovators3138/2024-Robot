@@ -4,7 +4,8 @@ from wpimath.geometry import Transform3d, Translation3d, Pose3d, Rotation3d
 from wpimath.units import degreesToRadians, inchesToMeters
 
 # Joystick IDs
-DRIVER_JOYSTICK = 0
+STEERING_WHEEL = 0
+THROTTLE = 1
 OPERATOR_CONTROLLER = 2
 
 # CAN Configs
@@ -56,10 +57,11 @@ ARM_MAX_ACCEL = 1500  # Example maximum acceleration
 ARM_MIN_VEL = 0  # Minimum velocity
 ARM_ALLOWED_ERROR = 2  # Allowed closed loop error
 
-ARM_GROUND_PICKUP_POSITION = 1470  # +131.4 deg Relative to vertical
+ARM_GROUND_PICKUP_POSITION = 318
+ARM_NEUTRAL_POSITION = 1530
 ARM_SHOOTER_POSITION = 439  # +39.3 deg Relative to vertical
-ARM_FRONT_AMP_POSITION = 192  # +17.2 deg Relative to vertical
-ARM_REAR_AMP_POSITION = -699  # -62.5 Relative to vertical
+ARM_FRONT_AMP_POSITION = 1626  # +17.2 deg Relative to vertical
+ARM_REAR_AMP_POSITION = 1383  # -62.5 Relative to vertical
 
 # Shooter Config
 SHOOTER_KP = 0.25

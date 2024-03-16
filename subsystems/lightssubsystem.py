@@ -48,6 +48,7 @@ class LightsSubsystem(commands2.Subsystem):
 
     def __init__(self):
         super().__init__()
+        self.current_color = Colors.Blue
         self.change_animation(AnimationTypes.SetAll)
         config_all = phoenix5.led.CANdleConfiguration()
         config_all.statusLedOffWhenActive = True
@@ -56,7 +57,7 @@ class LightsSubsystem(commands2.Subsystem):
         config_all.brightnessScalar = 0.1
         config_all.vBatOutputMode = phoenix5.led.VBatOutputMode.Modulated
         self.candle.configAllSettings(config_all, 100)
-        self.set_colors(Colors.Blue)
+        self.set_colors(Colors.Red)
 
     def set_colors(self, color: Colors) -> None:
         self.change_animation(AnimationTypes.SetAll)
@@ -86,7 +87,7 @@ class LightsSubsystem(commands2.Subsystem):
             self.to_animate = phoenix5.led.LarsonAnimation(0, 255, 46, 0, 1, self.led_count,
                                                            phoenix5.led.LarsonAnimation.BounceMode.Front, 3)
         elif to_change == AnimationTypes.Rainbow:
-            self.to_animate = phoenix5.led.RainbowAnimation(1, 0.1, self.led_count)
+            self.to_animate = phoenix5.led.RainbowAnimation(1, 0.9, self.led_count)
         elif to_change == AnimationTypes.RgbFade:
             self.to_animate = phoenix5.led.RgbFadeAnimation(0.7, 0.4, self.led_count)
         elif to_change == AnimationTypes.SingleFade:
@@ -94,7 +95,7 @@ class LightsSubsystem(commands2.Subsystem):
         elif to_change == AnimationTypes.Strobe:
             self.to_animate = phoenix5.led.StrobeAnimation(240, 10, 180, 0, 98.0 / 256.0, self.led_count);
         elif to_change == AnimationTypes.Twinkle:
-            self.to_animate = phoenix5.led.TwinkleAnimation(30, 70, 60, 0, 0.4, self.led_count,
+            self.to_animate = phoenix5.led.TwinkleAnimation(30, 70, 60, 0, 0.8, self.led_count,
                                                             phoenix5.led.TwinkleAnimation.TwinklePercent.Percent6);
         elif to_change == AnimationTypes.TwinkleOff:
             self.to_animate = phoenix5.led.TwinkleOffAnimation(70, 90, 175, 0, 0.8, self.led_count,
@@ -104,7 +105,10 @@ class LightsSubsystem(commands2.Subsystem):
 
     def periodic(self) -> None:
         if self.to_animate is None:
-            (red, green, blue) = self.current_color
+            try:
+                (red, green, blue) = self.current_color
+            except TypeError:
+                (red, green, blue) = (0, 0, 255)
             self.candle.setLEDs(red, green, blue)
         else:
             self.candle.animate(self.to_animate)

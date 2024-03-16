@@ -10,7 +10,7 @@ class ArmToRearAmpPosition(Command):
         super().__init__()
         self.arm = arm_subsystem
         self.position = constants.ARM_REAR_AMP_POSITION
-        self.addRequirements([self.arm])
+        self.addRequirements(self.arm)
 
     def initialize(self):
         self.arm.set_position(self.position)

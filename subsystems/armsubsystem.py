@@ -1,3 +1,6 @@
+import wpilib
+from wpilib import SmartDashboard
+
 import phoenix5
 from phoenix5 import WPI_TalonSRX, ControlMode, FeedbackDevice
 import commands2
@@ -22,6 +25,9 @@ class ArmSubsystem(commands2.Subsystem):
         self.arm_motor_2.follow(self.arm_motor_1)
         self.arm_motor_2.setInverted(phoenix5.InvertType.OpposeMaster)
         self.arm_motor_1.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute)
+        self.arm_motor_1.setSensorPhase(False)
+        self.arm_motor_1.setNeutralMode(phoenix5.NeutralMode.Brake)
+        self.arm_motor_2.setNeutralMode(phoenix5.NeutralMode.Brake)
 
         self.arm_motor_1.configNominalOutputForward(0, 30)
         self.arm_motor_1.configNominalOutputReverse(0, 30)
@@ -37,8 +43,13 @@ class ArmSubsystem(commands2.Subsystem):
         self.arm_motor_1.configMotionCruiseVelocity(constants.ARM_MAX_VEL, 30)
         self.arm_motor_1.configMotionAcceleration(constants.ARM_MAX_ACCEL)
 
-    def set_position(self, position):
-        self.arm_motor_1.set(ControlMode.MotionMagic, position)
+    def periodic(self) -> None:
+        SmartDashboard.putNumber("Arm Position", self.arm_motor_1.getSelectedSensorPosition(0))
+
+    def set_position(self, position) -> commands2.Command:
+        return commands2.cmd.runOnce(
+            lambda: self.arm_motor_1.set(ControlMode.MotionMagic, position), self
+        )
 
     def stop(self):
         self.arm_motor_1.stopMotor()

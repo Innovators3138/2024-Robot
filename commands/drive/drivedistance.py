@@ -7,6 +7,7 @@ import commands2
 import constants
 from subsystems.drivesubsystem import DriveSubsystem
 
+
 class DriveDistance(commands2.Command):
     class Axis(Enum):
         x = auto()
@@ -32,7 +33,7 @@ class DriveDistance(commands2.Command):
         self.drive.arcade_drive(self.speed_factor, 0)
 
     def end(self, interrupted: bool) -> bool:
-        self.drive.arcade_drive(0,0)
+        self.drive.arcade_drive(0, 0)
 
     def isFinished(self) -> bool:
         return self.distance_to_target < constants.SIMPLE_AUTO_DISTANCE
