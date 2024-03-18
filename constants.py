@@ -44,16 +44,18 @@ DRIVE_MIN = -1.0
 DRIVE_MAX = 1.0
 
 # Arm Config
-ARM_KP = 0.1  # Proportional coefficient
-ARM_KI = 0.0  # Integral coefficient
-ARM_KD = 0.0  # Derivative coefficient
-ARM_KFF = 0.000015  # Feedforward coefficient
+ARM_KU = 0.6
+ARM_TU = 1.0
+ARM_KP = 0.6*ARM_KU  # Proportional coefficient
+ARM_KI = 0.0001  # Integral coefficient
+ARM_KD = 3.0/40.0 * ARM_KU*ARM_TU  # Derivative coefficient
+ARM_KFF = 0.0  # Feedforward coefficient
 ARM_K_MAX_OUTPUT = 1.0  # Maximum output
 ARM_K_MIN_OUTPUT = -1.0  # Minimum output
 
 # Smart Motion coefficients
-ARM_MAX_VEL = 2000  # Example maximum velocity
-ARM_MAX_ACCEL = 1500  # Example maximum acceleration
+ARM_MAX_VEL = 1500  # Example maximum velocity
+ARM_MAX_ACCEL = 1000  # Example maximum acceleration
 ARM_MIN_VEL = 0  # Minimum velocity
 ARM_ALLOWED_ERROR = 2  # Allowed closed loop error
 
@@ -62,6 +64,7 @@ ARM_NEUTRAL_POSITION = 1530
 ARM_SHOOTER_POSITION = 439  # +39.3 deg Relative to vertical
 ARM_FRONT_AMP_POSITION = 1626  # +17.2 deg Relative to vertical
 ARM_REAR_AMP_POSITION = 1383  # -62.5 Relative to vertical
+ARM_DRIVING_POSITION = 1000
 
 # Shooter Config
 SHOOTER_KP = 0.25

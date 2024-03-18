@@ -11,7 +11,7 @@ from pathplannerlib.auto import PathPlannerAuto, NamedCommands
 import subsystems.lightssubsystem
 from subsystems import DriveSubsystem, ArmSubsystem, LightsSubsystem
 from commands.drive import DriveDistance
-from commands.arm.armposition import ArmPosition
+from commands.arm.armposition import *
 
 
 class RobotContainer(object):
@@ -26,10 +26,10 @@ class RobotContainer(object):
         # Do all subsystem inits here
         #self.drive_subsystem = DriveSubsystem()
         self.arm_subsystem = ArmSubsystem()
-        self.lights_subsystem = LightsSubsystem()
+        #self.lights_subsystem = LightsSubsystem()
 
-        self.lights_subsystem.change_animation(subsystems.lightssubsystem.AnimationTypes.SetAll)
-        self.lights_subsystem.set_colors(subsystems.lightssubsystem.Colors.Blue)
+        #self.lights_subsystem.change_animation(subsystems.lightssubsystem.AnimationTypes.SetAll)
+        #self.lights_subsystem.set_colors(subsystems.lightssubsystem.Colors.Blue)
 
         #wpilib.SmartDashboard.putNumberArray("Targets", [x.fiducialId for x in
         #                                                 self.drive_subsystem.vision_subsystem.camera.getLatestResult().targets])
@@ -64,7 +64,7 @@ class RobotContainer(object):
         # wpilib.SmartDashboard.putData("Autonomous", self.chooser)
 
         self.configure_buttons()
-        self.arm_subsystem.setDefaultCommand(ArmPosition(self.arm_subsystem, constants.ARM_NEUTRAL_POSITION))
+        #self.arm_subsystem.setDefaultCommand(ArmNeutralPosition(self.arm_subsystem))
         #self.drive_subsystem.setDefaultCommand(
         #    commands2.cmd.run(
         #        lambda: self.drive_subsystem.arcade_drive(
@@ -80,8 +80,14 @@ class RobotContainer(object):
 
     def configure_buttons(self):
         # link up the button actions with commands here
-        self.operator_controller.button(1).onTrue(
-            self.arm_subsystem.set_position(constants.ARM_FRONT_AMP_POSITION)
+        self.operator_controller.button(1).whileTrue(
+            ArmRearAmpPosition(self.arm_subsystem)
+        )
+        self.operator_controller.button(2).whileTrue(
+            ArmNeutralPosition(self.arm_subsystem)
+        )
+        self.operator_controller.button(3).whileTrue(
+            ArmRearPickupPosition(self.arm_subsystem)
         )
 
     def get_autonomous_command(self):
