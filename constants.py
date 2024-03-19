@@ -44,14 +44,22 @@ DRIVE_MIN = -1.0
 DRIVE_MAX = 1.0
 
 # Arm Config
-ARM_KU = 0.6
-ARM_TU = 1.0
-ARM_KP = 0.6*ARM_KU  # Proportional coefficient
-ARM_KI = 0.0001  # Integral coefficient
-ARM_KD = 3.0/40.0 * ARM_KU*ARM_TU  # Derivative coefficient
-ARM_KFF = 0.0  # Feedforward coefficient
+ARM_REAR_KU = 1.0
+ARM_REAR_TU = 1.0
+ARM_REAR_KP = 1.0*ARM_REAR_KU  # Proportional coefficient
+ARM_REAR_KI = 0.0005  # Integral coefficient
+ARM_REAR_KD = 2.0/40.0 * ARM_REAR_KU*ARM_REAR_TU  # Derivative coefficient
+ARM_REAR_KFF = 0.0  # Feedforward coefficient
+
+ARM_FRONT_KU = 0.6
+ARM_FRONT_TU = 1.0
+ARM_FRONT_KP = 1.0*ARM_FRONT_KU  # Proportional coefficient
+ARM_FRONT_KI = 0.0001  # Integral coefficient
+ARM_FRONT_KD = 3.0/40.0 * ARM_FRONT_KU*ARM_REAR_TU  # Derivative coefficient
+ARM_FRONT_KFF = 0.0  # Feedforward coefficient
 ARM_K_MAX_OUTPUT = 1.0  # Maximum output
 ARM_K_MIN_OUTPUT = -1.0  # Minimum output
+
 
 # Smart Motion coefficients
 ARM_MAX_VEL = 1500  # Example maximum velocity
@@ -61,10 +69,25 @@ ARM_ALLOWED_ERROR = 2  # Allowed closed loop error
 
 ARM_GROUND_PICKUP_POSITION = 318
 ARM_NEUTRAL_POSITION = 1530
-ARM_SHOOTER_POSITION = 439  # +39.3 deg Relative to vertical
+ARM_SHOOTER_POSITION = 1160  # +39.3 deg Relative to vertical
 ARM_FRONT_AMP_POSITION = 1626  # +17.2 deg Relative to vertical
 ARM_REAR_AMP_POSITION = 1383  # -62.5 Relative to vertical
 ARM_DRIVING_POSITION = 1000
+
+# Intake Config
+INTAKE_KP = 0.25
+INTAKE_KI = 0.001
+INTAKE_KD = 20.0
+INTAKE_KF = 1023.0 / 7200.0
+INTAKE_IZ = 300
+INTAKE_PID_LOOP_IDX = 0
+INTAKE_SLOT_IDX = 0
+INTAKE_TIMEOUT_MS = 30
+INTAKE_PEAK_OUT = 1.0
+INTAKE_ENCODER_CPR = 4096
+INTAKE_IN_RPM = 600
+INTAKE_OUT_RPM = -300
+INTAKE_FEED_RPM = 800
 
 # Shooter Config
 SHOOTER_KP = 0.25
@@ -78,20 +101,13 @@ SHOOTER_TIMEOUT_MS = 30
 SHOOTER_PEAK_OUT = 1.0
 SHOOTER_ENCODER_CPR = 4096
 
-SHOOTER_TARGET_RPM = 5000
-SHOOTER_RAMP_RATE = 60
+SHOOTER_SHOOT_RPM = 5000
+SHOOTER_OUT_RPM = -INTAKE_OUT_RPM
 
-# Intake Config
-INTAKE_KP = 0.25
-INTAKE_KI = 0.001
-INTAKE_KD = 20.0
-INTAKE_KF = 1023.0 / 7200.0
-INTAKE_IZ = 300
-INTAKE_PID_LOOP_IDX = 0
-INTAKE_SLOT_IDX = 0
-INTAKE_TIMEOUT_MS = 30
-INTAKE_PEAK_OUT = 1.0
-INTAKE_ENCODER_CPR = 4096
+#Retroreflective Sensor
+RETROREFLECTIVE_THRESHOLD = 3.5
+
+
 
 # Vision Sensors
 CAMERA_NAME = "photonvision"
