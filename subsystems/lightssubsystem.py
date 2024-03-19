@@ -1,7 +1,7 @@
-from enum import Enum
+from enum import Enum, auto
 
 import commands2
-import wpilib
+from wpilib import SmartDashboard
 import phoenix5.led
 import constants
 
@@ -46,6 +46,14 @@ class LightsSubsystem(commands2.Subsystem):
     current_animation: AnimationTypes
     current_color: Colors
 
+    class LightState(Enum):
+        Prematch = auto()
+        NoNote = auto()
+        NoteInIntake = auto()
+        ShooterUpToSpeed = auto()
+        Celebrate = auto()
+        Off = auto()
+
     def __init__(self):
         super().__init__()
         self.current_color = Colors.Blue
@@ -58,6 +66,9 @@ class LightsSubsystem(commands2.Subsystem):
         config_all.vBatOutputMode = phoenix5.led.VBatOutputMode.Modulated
         self.candle.configAllSettings(config_all, 100)
         self.set_colors(Colors.Red)
+
+        self.state = self.LightState.Prematch
+        SmartDashboard.putString("Light State:", str(self.state))
 
     def set_colors(self, color: Colors) -> None:
         self.change_animation(AnimationTypes.SetAll)
@@ -104,14 +115,43 @@ class LightsSubsystem(commands2.Subsystem):
             self.to_animate = None
 
     def periodic(self) -> None:
-        if self.to_animate is None:
-            try:
-                (red, green, blue) = self.current_color
-            except TypeError:
-                (red, green, blue) = (0, 0, 255)
-            self.candle.setLEDs(red, green, blue)
+        if self.state == self.LightState.Prematch:
+            self.change_animation(AnimationTypes.Rainbow)
+        elif self.state == self.LightState.NoNote:
+            self.change_animation(AnimationTypes.SetAll)
+            self.set_colors(Colors.Blue)
+        elif self.state == self.LightState.NoteInIntake:
+            self.change_animation(AnimationTypes.SetAll)
+            self.set_colors(Colors.Orange)
+        elif self.state == self.LightState.Celebrate:
+            self.change_animation(AnimationTypes.Twinkle)
+        elif self.state == self.LightState.ShooterUpToSpeed:
+            self.change_animation(AnimationTypes.SetAll)
+            self.set_colors(Colors.Lime)
+        elif self.state == self.LightState.Off:
+            self.change_animation(AnimationTypes.SetAll)
+            self.set_colors(Colors.Black)
         else:
-            self.candle.animate(self.to_animate)
+            self.change_animation(AnimationTypes.SetAll)
+            self.set_colors(Colors.Black)
+
+    def set_lights_prematch(self):
+        self.state = self.LightState.Prematch
+
+    def set_lights_no_note(self):
+        self.state = self.LightState.NoNote
+
+    def set_lights_note_in_intake(self):
+        self.state = self.LightState.NoteInIntake
+
+    def set_lights_celebrate(self):
+        self.state = self.LightState.Celebrate
+
+    def set_lights_shooter_up_to_speed(self):
+        self.state = self.LightState.ShooterUpToSpeed
+
+    def set_lights_off(self):
+        self.state = self.LightState.Off
 
     def simulationPeriodic(self) -> None:
         pass

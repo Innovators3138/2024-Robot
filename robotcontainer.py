@@ -34,7 +34,7 @@ class RobotContainer(object):
         self.arm_subsystem = ArmSubsystem()
         self.intake_subsystem = IntakeSubsystem()
         self.shooter_subsystem = ShooterSubsystem()
-        # self.lights_subsystem = LightsSubsystem()
+        self.lights_subsystem = LightsSubsystem()
 
         # self.lights_subsystem.change_animation(subsystems.lightssubsystem.AnimationTypes.SetAll)
         # self.lights_subsystem.set_colors(subsystems.lightssubsystem.Colors.Blue)
