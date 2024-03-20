@@ -86,8 +86,7 @@ class DriveSubsystem(commands2.Subsystem):
 
         self.field = Field2d()
         SmartDashboard.putData("Field", self.field)
-        SmartDashboard.putNumber("Left Encoder", self.left_encoder.getPosition())
-        SmartDashboard.putNumber("Right Encoder", self.right_encoder.getPosition())
+
 
         self.field.setRobotPose(self.pose_estimator.getEstimatedPosition())
         self.chassis_speeds = ChassisSpeeds(0,0,0)
@@ -123,7 +122,8 @@ class DriveSubsystem(commands2.Subsystem):
 
 
     def periodic(self) -> None:
-        pass
+        SmartDashboard.putNumber("Left Encoder", self.left_encoder.getPosition())
+        SmartDashboard.putNumber("Right Encoder", self.right_encoder.getPosition())
 
     def initialize_drive_encoders(self) -> typing.Tuple[SparkMaxAlternateEncoder, SparkMaxAlternateEncoder]:
         left_encoder = self.left_motor_1.getAlternateEncoder(constants.DRIVE_ENCODER_CPR)

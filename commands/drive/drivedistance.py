@@ -14,12 +14,12 @@ class DriveDistance(commands2.Command):
         y = auto()
 
     def __init__(self, distance: float, speed_factor: float, drive: DriveSubsystem) -> None:
-        super().__init__(self)
+        super().__init__()
 
         self.distance = distance
         self.speed_factor = speed_factor
         self.drive = drive
-        self.addRequirements([self.drive])
+        self.addRequirements(self.drive)
         self.target_pose = None
         self.distance_to_target = None
 

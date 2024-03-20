@@ -4,7 +4,7 @@ from wpilib import SmartDashboard
 
 from commands.intake.intakespeed import IntakeIn, IntakeStop, IntakeOutRear, IntakeOutFront
 from commands.arm.armposition import ArmRearPickupPosition, ArmRearAmpPosition, ArmFrontAmpPosition
-from commands.shooter.shooterspeed import ShooterStop, ShooterFeedFront
+from commands.shooter.shooterspeed import ShooterStop, ShooterFeedFront, ShooterFeedRear
 
 import constants
 from subsystems.armsubsystem import ArmSubsystem
@@ -26,7 +26,7 @@ class PrepareRearAmpScore(ParallelCommandGroup):
 class RearAmpScore(ParallelCommandGroup):
     def __init__(self, arm_subsystem: ArmSubsystem, intake_subsystem: IntakeSubsystem, shooter_subsystem: ShooterSubsystem):
         ParallelCommandGroup.__init__(
-            self, ArmRearAmpPosition(arm_subsystem), IntakeOutRear(intake_subsystem), ShooterStop(shooter_subsystem)
+            self, ArmRearAmpPosition(arm_subsystem), IntakeOutRear(intake_subsystem), ShooterFeedRear(shooter_subsystem)
         )
 
 class PrepareFrontAmpScore(ParallelCommandGroup):

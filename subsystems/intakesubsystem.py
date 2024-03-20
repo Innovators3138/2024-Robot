@@ -27,6 +27,10 @@ class IntakeSubsystem(commands2.Subsystem):
         self.intake_motor.clearStickyFaults()
         self.intake_motor.configFactoryDefault()
         self.intake_motor.setNeutralMode(phoenix5.NeutralMode.Coast)
+        self.intake_motor.configPeakCurrentLimit(30, 0)
+        self.intake_motor.configPeakCurrentDuration(2000)
+        self.intake_motor.configContinuousCurrentLimit(10, 0)
+
 
         self.intake_motor.configSelectedFeedbackSensor(phoenix5.FeedbackDevice.CTRE_MagEncoder_Relative,
                                                        constants.INTAKE_PID_LOOP_IDX,

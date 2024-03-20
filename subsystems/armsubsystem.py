@@ -55,6 +55,7 @@ class ArmSubsystem(commands2.Subsystem):
         self.arm_motor_1.config_kI(0, constants.ARM_REAR_KI, 30)
         self.arm_motor_1.config_kD(0, constants.ARM_REAR_KD, 30)
         self.arm_motor_1.config_kF(0, constants.ARM_REAR_KFF, 30)
+        self.arm_motor_1.config_IntegralZone(0, constants.ARM_REAR_IZONE, 30)
 
         self.arm_motor_1.configMotionCruiseVelocity(constants.ARM_MAX_VEL, 30)
         self.arm_motor_1.configMotionAcceleration(constants.ARM_MAX_ACCEL)
@@ -70,22 +71,28 @@ class ArmSubsystem(commands2.Subsystem):
         k_i = constants.ARM_REAR_KI
         k_d = constants.ARM_REAR_KD
         k_ff = constants.ARM_REAR_KFF
+        k_izone = constants.ARM_REAR_IZONE
+
         if self.arm_position > constants.ARM_NEUTRAL_POSITION:
             # We are on the front side
             k_p = constants.ARM_FRONT_KP
             k_i = constants.ARM_FRONT_KI
             k_d = constants.ARM_FRONT_KD
             k_ff = constants.ARM_FRONT_KFF
+            k_izone = constants.ARM_FRONT_IZONE
 
         SmartDashboard.putNumber("Arm k_p", k_p)
         SmartDashboard.putNumber("Arm k_i", k_i)
         SmartDashboard.putNumber("Arm k_d", k_d)
         SmartDashboard.putNumber("Arm k_ff", k_ff)
+        SmartDashboard.putNumber("Arm Izone", k_izone)
 
         self.arm_motor_1.config_kP(0, k_p, 30)
         self.arm_motor_1.config_kI(0, k_i, 30)
         self.arm_motor_1.config_kD(0, k_d, 30)
         self.arm_motor_1.config_kF(0, k_ff, 30)
+        self.arm_motor_1.config_IntegralZone(0, k_izone, 30)
+
 
         if self.state == self.ArmState.GroundPickupPosition:
             self.set_position(constants.ARM_GROUND_PICKUP_POSITION)

@@ -47,18 +47,20 @@ DRIVE_MAX = 1.0
 ARM_REAR_KU = 1.0
 ARM_REAR_TU = 1.0
 ARM_REAR_KP = 1.0*ARM_REAR_KU  # Proportional coefficient
-ARM_REAR_KI = 0.0005  # Integral coefficient
+ARM_REAR_KI = 0.001  # Integral coefficient
 ARM_REAR_KD = 2.0/40.0 * ARM_REAR_KU*ARM_REAR_TU  # Derivative coefficient
 ARM_REAR_KFF = 0.0  # Feedforward coefficient
+ARM_REAR_IZONE = 200
 
 ARM_FRONT_KU = 0.6
 ARM_FRONT_TU = 1.0
 ARM_FRONT_KP = 1.0*ARM_FRONT_KU  # Proportional coefficient
-ARM_FRONT_KI = 0.0001  # Integral coefficient
+ARM_FRONT_KI = 0.001  # Integral coefficient
 ARM_FRONT_KD = 3.0/40.0 * ARM_FRONT_KU*ARM_REAR_TU  # Derivative coefficient
 ARM_FRONT_KFF = 0.0  # Feedforward coefficient
 ARM_K_MAX_OUTPUT = 1.0  # Maximum output
 ARM_K_MIN_OUTPUT = -1.0  # Minimum output
+ARM_FRONT_IZONE = 200
 
 
 # Smart Motion coefficients
@@ -118,3 +120,4 @@ NOMINAL_VOLTAGE = 11.0
 
 # Autonomous Routines
 SIMPLE_AUTO_DISTANCE = 2.0 # meters
+AUTO_DURATION = 15 # seconds

@@ -31,6 +31,12 @@ class ShooterFeedFront(SetShooterState):
     def execute(self) -> None:
         self.shooter_subsystem.set_shooter_feed_front()
 
+class ShooterFeedRear(SetShooterState):
+    def __init__(self, shooter_subsystem: ShooterSubsystem) -> None:
+        SetShooterState.__init__(self, shooter_subsystem)
+
+    def execute(self) -> None:
+        self.shooter_subsystem.set_shooter_feed_rear()
 
 class ShooterStop(SetShooterState):
     def __init__(self, shooter_subsystem: ShooterSubsystem) -> None:

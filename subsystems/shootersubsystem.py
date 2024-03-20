@@ -18,6 +18,7 @@ class ShooterSubsystem(commands2.Subsystem):
     class ShooterState(Enum):
         Shoot = auto()
         FeedFront = auto()
+        FeedRear = auto()
         Stop = auto()
 
     def __init__(self) -> None:
@@ -59,6 +60,8 @@ class ShooterSubsystem(commands2.Subsystem):
             self.set_speed(constants.SHOOTER_SHOOT_RPM)
         elif self.state == self.ShooterState.FeedFront:
             self.set_speed(constants.SHOOTER_OUT_RPM)
+        elif self.state == self.ShooterState.FeedRear:
+            self.set_speed(-constants.SHOOTER_OUT_RPM)
         elif self.state == self.ShooterState.Stop:
             self.set_speed(0)
         else:
@@ -76,6 +79,9 @@ class ShooterSubsystem(commands2.Subsystem):
 
     def set_shooter_feed_front(self) -> None:
         self.state = self.ShooterState.FeedFront
+
+    def set_shooter_feed_rear(self) -> None:
+        self.state = self.ShooterState.FeedRear
 
     def set_shooter_stop(self) -> None:
         self.state = self.ShooterState.Stop
