@@ -4,7 +4,6 @@ import wpilib
 import commands2
 import robotcontainer
 
-
 class MyRobot(commands2.TimedCommandRobot):
     """
 
@@ -41,6 +40,8 @@ class MyRobot(commands2.TimedCommandRobot):
 
     def teleopPeriodic(self) -> None:
         """"""
+
+
         if wpilib.RobotBase.isSimulation():
             wpilib.DataLogManager.start()
         else:

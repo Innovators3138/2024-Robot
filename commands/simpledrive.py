@@ -4,6 +4,7 @@ from subsystems.drivesubsystem import DriveSubsystem
 from commands.drive.simpledriveforward import DriveDistance, StopDrive
 class SimpleDrive(SequentialCommandGroup):
     def __init__(self, drive_subsystem: DriveSubsystem):
+        print("Init SimpleDrive")
         SequentialCommandGroup.__init__(
             self,
             DriveDistance(drive_subsystem),

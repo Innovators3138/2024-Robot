@@ -184,9 +184,11 @@ class DriveSubsystem(commands2.Subsystem):
         return wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed
 
     def simple_drive_forward(self) -> None:
-        self.left_motor_1.ControlType.kVoltage(6.0)
-        self.right_motor_1.ControlType.kVoltage(6.0)
+        #self.left_motor_1.set(0.5)
+        #self.right_motor_1.set(0.5)
+        pass
 
     def stop_drive(self):
-        self.left_motor_1.ControlType.kVoltage(0.0)
-        self.right_motor_1.ControlType.kVoltage(0.0)
+        #self.left_motor_1.set(0.0)
+        #self.right_motor_2.set(0.0)
+        pass

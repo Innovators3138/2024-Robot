@@ -139,6 +139,4 @@ class RobotContainer(object):
         )
 
     def get_autonomous_command(self):
-        selected = self.chooser.getSelected()
-        print(str(selected))
         return self.chooser.getSelected()
