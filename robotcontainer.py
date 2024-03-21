@@ -81,7 +81,7 @@ class RobotContainer(object):
         # wpilib.SmartDashboard.putData("Autonomous", self.chooser)
 
         self.chooser.addOption("Do Nothing Auto", self.nothing_auto)
-        self.chooser.setDefaultOption("Simple Drive Auto", SimpleDrive)
+        self.chooser.setDefaultOption("Simple Drive Auto", SimpleDrive(self.drive_subsystem))
         wpilib.SmartDashboard.putData("Auto Choices", self.chooser)
 
         self.configure_buttons()
