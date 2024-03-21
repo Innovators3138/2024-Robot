@@ -71,12 +71,13 @@ ARM_ALLOWED_ERROR = 2  # Allowed closed loop error
 
 ARM_GROUND_PICKUP_POSITION = 318
 ARM_NEUTRAL_POSITION = 1530
-ARM_SHOOTER_POSITION = 1160  # +39.3 deg Relative to vertical
+#ARM_SHOOTER_POSITION = 1160  # +39.3 deg Relative to vertical
+ARM_SHOOTER_POSITION = 1280
 ARM_FRONT_AMP_POSITION = 1626  # +17.2 deg Relative to vertical
 ARM_REAR_AMP_POSITION = 1383  # -62.5 Relative to vertical
 ARM_DRIVING_POSITION = 1000
 
-# Intake Config
+# intake Config
 INTAKE_KP = 0.25
 INTAKE_KI = 0.001
 INTAKE_KD = 20.0

@@ -63,9 +63,9 @@ class ShooterSubsystem(commands2.Subsystem):
         elif self.state == self.ShooterState.FeedRear:
             self.set_speed(-constants.SHOOTER_OUT_RPM)
         elif self.state == self.ShooterState.Stop:
-            self.set_speed(0)
+            self.shooter_motor.set(0)
         else:
-            self.set_speed(0)
+            self.shooter_motor.set(0)
 
         self.shooter_speed = self.shooter_motor.getSensorCollection().getQuadratureVelocity()
         SmartDashboard.putString("Shooter State", str(self.state))

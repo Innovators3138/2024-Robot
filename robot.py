@@ -1,3 +1,5 @@
+import typing
+
 import wpilib
 import commands2
 import robotcontainer
@@ -7,6 +9,8 @@ class MyRobot(commands2.TimedCommandRobot):
     """
 
     """
+    container = None
+    autonomous_command: typing.Optional[commands2.Command] = None
 
     def robotInit(self) -> None:
         """
@@ -23,6 +27,9 @@ class MyRobot(commands2.TimedCommandRobot):
     def autonomousInit(self) -> None:
         """
         """
+        self.autonomous_command = self.container.get_autonomous_command()
+        if self.autonomous_command:
+            self.autonomous_command.schedule()
 
     def autonomousPeriodic(self) -> None:
         """

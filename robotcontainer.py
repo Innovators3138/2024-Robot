@@ -18,6 +18,7 @@ from commands.shooter.shooterspeed import *
 from commands.intakecommands import GroundIntake, PrepareRearAmpScore, PrepareFrontAmpScore, RearAmpScore, FrontAmpScore
 from commands.shootercommands import PrepareToShoot, Shoot
 from commands.resetdrive import ResetDrive
+from commands.simpledrive import SimpleDrive
 
 
 class RobotContainer(object):
@@ -80,7 +81,7 @@ class RobotContainer(object):
         # wpilib.SmartDashboard.putData("Autonomous", self.chooser)
 
         self.chooser.addOption("Do Nothing Auto", self.nothing_auto)
-        self.chooser.setDefaultOption("Simple Auto", self.simple_auto)
+        self.chooser.setDefaultOption("Simple Drive Auto", SimpleDrive)
         wpilib.SmartDashboard.putData("Auto Choices", self.chooser)
 
         self.configure_buttons()
@@ -138,4 +139,6 @@ class RobotContainer(object):
         )
 
     def get_autonomous_command(self):
-        return PathPlannerAuto('Example Auto')
+        selected = self.chooser.getSelected()
+        print(str(selected))
+        return self.chooser.getSelected()

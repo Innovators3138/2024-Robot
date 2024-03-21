@@ -56,14 +56,14 @@ class IntakeSubsystem(commands2.Subsystem):
 
         self.intake_speed = self.intake_motor.getSensorCollection().getQuadratureVelocity()
         self.state = self.IntakeState.IntakeStop
-        SmartDashboard.putNumber("Intake Speed:", 0)
+        SmartDashboard.putNumber("intake Speed:", 0)
         SmartDashboard.putNumber("Reflective Sensor", self.reflective_sensor.getAverageValue())
 
     def periodic(self):
         if self.state == self.IntakeState.IntakeIn:
             self.set_speed(constants.INTAKE_IN_RPM)
             if self.reflective_tripped():
-                self.set_speed(0)
+                self.state = self.IntakeState.IntakeStop
         elif self.state == self.IntakeState.IntakeOutRear:
             self.set_speed(constants.INTAKE_OUT_RPM)
         elif self.state == self.IntakeState.IntakeOutFront:
@@ -71,13 +71,13 @@ class IntakeSubsystem(commands2.Subsystem):
         elif self.state == self.IntakeState.IntakeFeed:
             self.set_speed(constants.SHOOTER_SHOOT_RPM)
         elif self.state == self.IntakeState.IntakeStop:
-            self.set_speed(0)
+            self.intake_motor.set(0)
         else:
-            self.set_speed(0)
+            self.intake_motor.set(0)
 
         self.intake_speed = self.intake_motor.getSensorCollection().getQuadratureVelocity()
-        SmartDashboard.putString("Intake State", str(self.state))
-        SmartDashboard.putNumber("Intake Speed:", units_to_rpm(self.intake_speed, constants.INTAKE_ENCODER_CPR))
+        SmartDashboard.putString("intake State", str(self.state))
+        SmartDashboard.putNumber("intake Speed:", units_to_rpm(self.intake_speed, constants.INTAKE_ENCODER_CPR))
         SmartDashboard.putNumber("Reflective Sensor", self.reflective_sensor.getAverageVoltage())
 
     def set_speed(self, target_rpm) -> None:
@@ -103,3 +103,4 @@ class IntakeSubsystem(commands2.Subsystem):
 
     def reflective_tripped(self) -> bool:
         return self.reflective_sensor.getAverageVoltage() > constants.RETROREFLECTIVE_THRESHOLD
+

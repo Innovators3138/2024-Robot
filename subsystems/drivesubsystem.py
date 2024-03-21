@@ -182,3 +182,11 @@ class DriveSubsystem(commands2.Subsystem):
 
     def should_flip_path(self) -> bool:
         return wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed
+
+    def simple_drive_forward(self) -> None:
+        self.left_motor_1.ControlType.kVoltage(6.0)
+        self.right_motor_1.ControlType.kVoltage(6.0)
+
+    def stop_drive(self):
+        self.left_motor_1.ControlType.kVoltage(0.0)
+        self.right_motor_1.ControlType.kVoltage(0.0)
