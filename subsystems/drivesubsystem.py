@@ -184,11 +184,7 @@ class DriveSubsystem(commands2.Subsystem):
         return wpilib.DriverStation.getAlliance() == wpilib.DriverStation.Alliance.kRed
 
     def simple_drive_forward(self) -> None:
-        #self.left_motor_1.set(0.5)
-        #self.right_motor_1.set(0.5)
-        pass
+        self.drive.arcadeDrive(0.5, 0.0)
 
     def stop_drive(self):
-        #self.left_motor_1.set(0.0)
-        #self.right_motor_2.set(0.0)
-        pass
+        self.drive.arcadeDrive(0.0, 0.0)
